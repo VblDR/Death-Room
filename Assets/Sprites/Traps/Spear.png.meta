@@ -131,10 +131,10 @@ TextureImporter:
       name: Spear_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 0
-        width: 16
-        height: 64
+        width: 11
+        height: 15
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,10 +152,10 @@ TextureImporter:
       name: Spear_1
       rect:
         serializedVersion: 2
-        x: 16
+        x: 19
         y: 0
-        width: 16
-        height: 64
+        width: 11
+        height: 16
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,9 +173,9 @@ TextureImporter:
       name: Spear_2
       rect:
         serializedVersion: 2
-        x: 32
+        x: 35
         y: 0
-        width: 16
+        width: 11
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -194,9 +194,9 @@ TextureImporter:
       name: Spear_3
       rect:
         serializedVersion: 2
-        x: 48
+        x: 51
         y: 0
-        width: 16
+        width: 11
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -215,9 +215,9 @@ TextureImporter:
       name: Spear_4
       rect:
         serializedVersion: 2
-        x: 64
+        x: 67
         y: 0
-        width: 16
+        width: 11
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -236,9 +236,9 @@ TextureImporter:
       name: Spear_5
       rect:
         serializedVersion: 2
-        x: 80
+        x: 83
         y: 0
-        width: 16
+        width: 11
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -257,9 +257,9 @@ TextureImporter:
       name: Spear_6
       rect:
         serializedVersion: 2
-        x: 96
+        x: 99
         y: 0
-        width: 16
+        width: 11
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -278,10 +278,10 @@ TextureImporter:
       name: Spear_7
       rect:
         serializedVersion: 2
-        x: 112
+        x: 115
         y: 0
-        width: 16
-        height: 64
+        width: 11
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -299,9 +299,9 @@ TextureImporter:
       name: Spear_8
       rect:
         serializedVersion: 2
-        x: 128
+        x: 131
         y: 0
-        width: 16
+        width: 11
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -320,9 +320,9 @@ TextureImporter:
       name: Spear_9
       rect:
         serializedVersion: 2
-        x: 144
+        x: 147
         y: 0
-        width: 16
+        width: 11
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -341,9 +341,9 @@ TextureImporter:
       name: Spear_10
       rect:
         serializedVersion: 2
-        x: 160
+        x: 163
         y: 0
-        width: 16
+        width: 11
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -362,9 +362,9 @@ TextureImporter:
       name: Spear_11
       rect:
         serializedVersion: 2
-        x: 176
+        x: 179
         y: 0
-        width: 16
+        width: 11
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}

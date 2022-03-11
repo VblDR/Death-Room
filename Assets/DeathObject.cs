@@ -4,24 +4,41 @@ using UnityEngine;
 
 public class DeathObject : MonoBehaviour
 {
-    protected bool activated = true;
+    [SerializeField]
+    protected float activeTime;
+    [SerializeField]
+    protected float sleepTime;
 
-    SpriteRenderer _sprite;
-    BoxCollider2D _collider;
+    protected bool activated = false;
+    protected Animator anim;
+    protected float currentTime;
+
+    protected SpriteRenderer _sprite;
+    protected BoxCollider2D _collider;
 
     protected virtual void Awake()
     {
         runInEditMode = true;
-        _sprite = GetComponent<SpriteRenderer>();
-        _collider = GetComponent<BoxCollider2D>();
+        if (GetComponent<BoxCollider2D>() != null)
+        {
+            _sprite = GetComponent<SpriteRenderer>();
+            _collider = GetComponent<BoxCollider2D>();
+        }
     }
+
+    protected virtual void Start()
+    {
+
+    }
+
 
     protected virtual void Update()
     {
-        _collider.offset = new Vector2(0, _sprite.bounds.size.y / 2);
-        _collider.size = new Vector3(_sprite.bounds.size.x / transform.lossyScale.x,
-                                     _sprite.bounds.size.y / transform.lossyScale.y,
-                                     _sprite.bounds.size.z / transform.lossyScale.z);
+        if (_collider != null)
+        {
+            SwitchCollider();
+        }
+        
     }
 
 
@@ -29,5 +46,52 @@ public class DeathObject : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
             collision.GetComponent<Player>().Death();
+    }
+
+    protected virtual void SwitchState()
+    {
+        if (activated)
+        {
+            currentTime = sleepTime;
+            anim.Play("Idle");
+        }
+        else
+        {
+            currentTime = activeTime;
+            anim.Play("Activation");
+        }
+        activated = !activated;
+    }
+
+    protected virtual void SwitchCollider()
+    {
+        if (transform.rotation.eulerAngles.z == 0)
+        {
+            _collider.offset = new Vector2(0, _sprite.bounds.size.y / 2);
+            _collider.size = new Vector3(_sprite.bounds.size.x / transform.lossyScale.x,
+                                         _sprite.bounds.size.y / transform.lossyScale.y,
+                                         _sprite.bounds.size.z / transform.lossyScale.z);
+        }
+        else if(transform.rotation.eulerAngles.z == 90f)
+        {
+            _collider.offset = new Vector2(0, _sprite.bounds.size.x / 2);
+            _collider.size = new Vector3(_sprite.bounds.size.y / transform.lossyScale.y, 
+                                         _sprite.bounds.size.x / transform.lossyScale.x,
+                                         _sprite.bounds.size.z / transform.lossyScale.z);
+        }
+        else if(transform.rotation.eulerAngles.z == 180f)
+        {
+            _collider.offset = new Vector2(0, _sprite.bounds.size.y / 2);
+            _collider.size = new Vector3(_sprite.bounds.size.x / transform.lossyScale.x,
+                                         _sprite.bounds.size.y / transform.lossyScale.y,
+                                         _sprite.bounds.size.z / transform.lossyScale.z);
+        }
+        else if (transform.rotation.eulerAngles.z == 270f)
+        {
+            _collider.offset = new Vector2(0, _sprite.bounds.size.x/ 2);
+            _collider.size = new Vector3(_sprite.bounds.size.y / transform.lossyScale.y,
+                                         _sprite.bounds.size.x / transform.lossyScale.x,
+                                         _sprite.bounds.size.z / transform.lossyScale.z);
+        }
     }
 }
