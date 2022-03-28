@@ -7,37 +7,55 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float maxSpeed;
     [SerializeField]
-    private float acceleration;
-    [SerializeField]
-    private float deceleration;
-    [SerializeField]
     private float jumpForce;
     [SerializeField]
     private Transform groundPos;
 
-
+    private Animator anim;
 
     //movement
-    private float currentSpeed;
     private Rigidbody2D rb;
     private bool isGrounded = false;
-    private float velocityX = 0;
+    private bool isRight = true;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
         CheckGround();
         GetInput();
+        anim.SetFloat("velocityY", rb.velocity.y);
+        anim.SetFloat("velocityX", Mathf.Abs(rb.velocity.x));
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+            Attack();
     }
 
     public void Death()
     {
-        Debug.Log("Player Died!");
-        GameController.ReloadLevel();
+        anim.Play("Death");
+        StartCoroutine(HelperScripts.WaitFor(0.4f, delegate ()
+        {
+            GameController.ReloadLevel();
+        }));
+
+    }
+
+    public void Attack()
+    {
+        anim.SetBool("Attack", true);
+        StartCoroutine(HelperScripts.WaitFor(0.1f, delegate ()
+        {
+            anim.SetBool("Attack", false);
+        }));
     }
 
     private void GetInput()
@@ -45,12 +63,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
             Jump();
 
-        if (Input.GetAxis("Horizontal") > 0)
-            Move(1);
-        else if (Input.GetAxis("Horizontal") < 0)
-            Move(-1);
-        else
-            SlowDown();
+        Move(Input.GetAxis("Horizontal"));
     }
 
     private void Jump()
@@ -60,22 +73,18 @@ public class Player : MonoBehaviour
 
     }
 
-    private void Move(int direction)
+    private void Move(float direction)
     {
-        if (Mathf.Abs(velocityX) < maxSpeed) 
-            velocityX += direction * acceleration;
-        rb.velocity = new Vector2(velocityX, rb.velocity.y);
-    }
-
-    private void SlowDown()
-    {
-        if (rb.velocity.x != 0)
+        rb.velocity = new Vector2(direction * maxSpeed, rb.velocity.y);
+        if(isRight && direction < 0)
         {
-
-            velocityX = 0;
-            rb.velocity += new Vector2(-deceleration * rb.velocity.x, 0);
-            if (Mathf.Abs(rb.velocity.x) < 0.1f)
-                rb.velocity = new Vector2(0, rb.velocity.y);
+            isRight = false;
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
+        else if(!isRight && direction > 0)
+        {
+            isRight = true;
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
     }
 
