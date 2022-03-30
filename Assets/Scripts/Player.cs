@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float jumpForce;
     [SerializeField]
+    private float jumpLimit;
+    [SerializeField]
     private Transform groundPos;
 
     private Animator anim;
@@ -17,6 +19,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private bool isGrounded = false;
     private bool isRight = true;
+    private bool jumping = false;
+
 
     private void Start()
     {
@@ -61,16 +65,30 @@ public class Player : MonoBehaviour
     private void GetInput()
     {
         if (Input.GetKey(KeyCode.Space))
+        {
             Jump();
+        }
+        else
+            jumping = false;
 
         Move(Input.GetAxis("Horizontal"));
     }
 
     private void Jump()
     {
-        if (isGrounded)
-            rb.AddForce(new Vector2(0, jumpForce));
 
+        if (isGrounded)
+            jumping = true;
+            //    rb.AddForce(new Vector2(0, jumpForce));
+
+
+        if((!jumping && isGrounded) || jumping)
+        {
+            if (rb.velocity.y < jumpLimit)
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + jumpForce);
+            else
+                jumping = false;
+        }
     }
 
     private void Move(float direction)

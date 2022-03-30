@@ -12,6 +12,10 @@ public class GameController : MonoBehaviour
     private GameObject[] stageList;
     [SerializeField]
     private GameObject[] activators;
+    
+    //UI
+    [SerializeField]
+    private GameObject finishGame;
 
     private int levelStage = -1;
 
@@ -36,7 +40,7 @@ public class GameController : MonoBehaviour
 
     private void FinishLevel()
     {
-        Debug.Log("Level Finished!");
+        finishGame.SetActive(true);
     }
 
     public static void ReloadLevel()
