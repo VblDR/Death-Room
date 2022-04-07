@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     private static GameController instance;
 
+
     [SerializeField]
     private GameObject[] stageList;
     [SerializeField]
@@ -28,7 +29,6 @@ public class GameController : MonoBehaviour
     public static void ActivateNextStage()
     {
         instance.levelStage += 1;
-        instance.activators[instance.levelStage].SetActive(false);
         if (instance.levelStage + 1 != instance.activators.Length)
         {
             instance.stageList[instance.levelStage].SetActive(true);
@@ -40,11 +40,24 @@ public class GameController : MonoBehaviour
 
     private void FinishLevel()
     {
+        Player.GameFinished();
         finishGame.SetActive(true);
+        if (SceneManager.GetActiveScene().buildIndex - 1 == PlayerPrefs.GetInt("CurrentLevel"))
+            PlayerPrefs.SetInt("CurrentLevel", PlayerPrefs.GetInt("CurrentLevel") + 1);
     }
 
     public static void ReloadLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene("Level" + PlayerPrefs.GetInt("CurrentLevel"));
     }
 }

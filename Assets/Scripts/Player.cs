@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private static Player instance;
+
     [SerializeField]
     private float maxSpeed;
     [SerializeField]
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour
     private Transform groundPos;
 
     private Animator anim;
+    private bool finished = false;
 
     //movement
     private Rigidbody2D rb;
@@ -22,25 +25,33 @@ public class Player : MonoBehaviour
     private bool jumping = false;
 
 
+
     private void Start()
     {
+        instance = this;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
-        CheckGround();
-        GetInput();
-        anim.SetFloat("velocityY", rb.velocity.y);
-        anim.SetFloat("velocityX", Mathf.Abs(rb.velocity.x));
-
+        if (!finished)
+        {
+            CheckGround();
+            GetInput();
+            anim.SetFloat("velocityY", rb.velocity.y);
+            anim.SetFloat("velocityX", Mathf.Abs(rb.velocity.x));
+        }
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-            Attack();
+        if (!finished)
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+                Attack();
+        }
+
     }
 
     public void Death()
@@ -55,11 +66,14 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-        anim.SetBool("Attack", true);
-        StartCoroutine(HelperScripts.WaitFor(0.1f, delegate ()
+        anim.Play("Attack");
+
+        RaycastHit2D[] ray = Physics2D.RaycastAll(transform.position, isRight ? Vector2.right : Vector2.left, 1.5f);
+        for(int i = 0; i < ray.Length; i++)
         {
-            anim.SetBool("Attack", false);
-        }));
+            if (ray[i].transform.CompareTag("Activator"))
+                ray[i].transform.GetComponent<Activator>().Activate();
+        }
     }
 
     private void GetInput()
@@ -111,5 +125,8 @@ public class Player : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundPos.position, 0.05f, 1 << LayerMask.NameToLayer("Room") | 1 << LayerMask.NameToLayer("Platform"));
     }
 
-
+    public static void GameFinished()
+    {
+        instance.finished = true;
+    }
 }
