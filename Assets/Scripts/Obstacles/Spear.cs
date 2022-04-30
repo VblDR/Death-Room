@@ -34,7 +34,7 @@ public class Spear : DeathObject
 
     }
 
-    protected override void SwitchCollider()
+    protected override void SwitchCollider(BoxCollider2D _collider)
     {
         if (transform.rotation.eulerAngles.z == 0)
         {

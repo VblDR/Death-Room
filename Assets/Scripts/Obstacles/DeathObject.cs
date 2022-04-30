@@ -36,7 +36,7 @@ public class DeathObject : MonoBehaviour
     {
         if (_collider != null)
         {
-            SwitchCollider();
+            SwitchCollider(_collider);
         }
         
     }
@@ -53,7 +53,7 @@ public class DeathObject : MonoBehaviour
         if (activated)
         {
             currentTime = sleepTime;
-            anim.Play("Idle");
+            anim.Play("Deactivation");
         }
         else
         {
@@ -63,7 +63,7 @@ public class DeathObject : MonoBehaviour
         activated = !activated;
     }
 
-    protected virtual void SwitchCollider()
+    protected virtual void SwitchCollider(BoxCollider2D _collider)
     {
         if (transform.rotation.eulerAngles.z == 0)
         {
@@ -92,6 +92,26 @@ public class DeathObject : MonoBehaviour
             _collider.size = new Vector3(_sprite.bounds.size.y / transform.lossyScale.y,
                                          _sprite.bounds.size.x / transform.lossyScale.x,
                                          _sprite.bounds.size.z / transform.lossyScale.z);
+        }
+    }
+
+    protected virtual void SwitchCollider(CapsuleCollider2D _collider)
+    {
+        if (transform.rotation.eulerAngles.z == 0)
+        {
+            _collider.offset = new Vector2(_collider.offset.x, _sprite.bounds.size.y / 2);
+        }
+        else if (transform.rotation.eulerAngles.z == 90f)
+        {
+            _collider.offset = new Vector2(_collider.offset.y, _sprite.bounds.size.x / 2);
+        }
+        else if (transform.rotation.eulerAngles.z == 180f)
+        {
+            _collider.offset = new Vector2(_collider.offset.x, _sprite.bounds.size.y / 2);
+        }
+        else if (transform.rotation.eulerAngles.z == 270f)
+        {
+            _collider.offset = new Vector2(_collider.offset.y, _sprite.bounds.size.x / 2);
         }
     }
 }

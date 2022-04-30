@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
     {
         anim.Play("Attack");
 
-        RaycastHit2D[] ray = Physics2D.RaycastAll(transform.position, isRight ? Vector2.right : Vector2.left, 1.5f);
+        RaycastHit2D[] ray = Physics2D.RaycastAll(transform.position + new Vector3(0, 0.3f, 0), isRight ? Vector2.right : Vector2.left, 1.5f);
         for(int i = 0; i < ray.Length; i++)
         {
             if (ray[i].transform.CompareTag("Activator"))
