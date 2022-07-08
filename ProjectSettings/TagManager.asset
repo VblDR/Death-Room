@@ -8,6 +8,7 @@ TagManager:
   - DeathObject
   - Activator
   - Platform
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Room
   - DeathObject
   - Platform
-  - 
+  - Enemy
   - 
   - 
   - 
