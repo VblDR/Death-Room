@@ -73,8 +73,8 @@ public class Player : MonoBehaviour
         {
             if (ray[i].transform.CompareTag("Activator"))
                 ray[i].transform.GetComponent<Activator>().Activate();
-            if (ray[i].transform.CompareTag("Enemy"))
-                ray[i].transform.GetComponent<Enemy>().Death();
+            if (ray[i].transform.GetComponent<IDamageable>() != null)
+                ray[i].transform.GetComponent<IDamageable>().TakeDamage();
         }
     }
 

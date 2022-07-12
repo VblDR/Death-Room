@@ -2217,9 +2217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e035b9188d7c17b40a547fb4a6dd6c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 768101976}
-  moveSpeed: 12
-  offsetY: 5
 --- !u!1001 &693493582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2281,11 +2278,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4911553193213192965, guid: 81615df73b78b6b489e21140c0cf4ea7, type: 3}
   m_PrefabInstance: {fileID: 693493582}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &768101976 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 696311166407453558, guid: 059d10a93c0a84c43a1a38e1566d25d0, type: 3}
-  m_PrefabInstance: {fileID: 696311166746682670}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &902125182
 PrefabInstance:

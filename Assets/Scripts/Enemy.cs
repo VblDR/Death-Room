@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField]
     protected float speed;
@@ -24,13 +24,13 @@ public class Enemy : MonoBehaviour
         dirPos.x += distance;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if(live)
             Patrol(); 
     }
 
-    private void Patrol()
+    protected void Patrol()
     {
         transform.localPosition = Vector2.MoveTowards(transform.localPosition, dirPos, speed * Time.fixedDeltaTime);
         if (Vector2.Distance(dirPos, transform.localPosition) <= 0.1f)
@@ -39,12 +39,21 @@ public class Enemy : MonoBehaviour
                 dirPos.x -= distance;
             else
                 dirPos.x += distance;
-            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-            isRight = !isRight;
+            Rotate();
         }
     }
 
-    public void Death()
+    public void TakeDamage()
+    {
+        Death();
+    }
+
+    protected virtual void Attack(Transform target)
+    {
+        target.GetComponent<IDamageable>().TakeDamage();
+    }
+
+    protected virtual void Death()
     {
         live = false;
         animator.Play("Death");
@@ -57,8 +66,13 @@ public class Enemy : MonoBehaviour
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (live && collision.transform.CompareTag("Player"))
-            collision.transform.GetComponent<Player>().Death();
+        if (live && collision.transform.GetComponent<IDamageable>() != null)
+            Attack(collision.transform);
     }
 
+    protected void Rotate()
+    {
+        transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+        isRight = !isRight;
+    }
 }

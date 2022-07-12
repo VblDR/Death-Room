@@ -12,3 +12,8 @@ public class HelperScripts : MonoBehaviour
         callback();
     }
 }
+
+public interface IDamageable
+{
+    public void TakeDamage();
+}
